@@ -7,6 +7,9 @@ static TextLayer *text_layer_2;
 static char* interval_text;
 static char* timer_text;
 
+static bool setting_minutes = false;
+static bool setting_seconds = false;
+
 static int interval_number = 1;
 static int interval_size = 15 + (60 * 4);
 static int our_interval;
@@ -56,16 +59,43 @@ static void reset_countdown() {
   update_interval_text();
 }
 
+static void start_setting_minutes() {
+  text_layer_set_background_color(text_layer, GColorBlack);
+  text_layer_set_text_color(text_layer, GColorWhite);
+  setting_minutes = true;
+  setting_seconds = true;
+}
+
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  reset_countdown();
+  if (!setting_minutes && !setting_seconds) {
+    reset_countdown();
+    start_setting_minutes();
+  } else {
+    interval_size = our_interval;
+    reset_countdown();
+    text_layer_set_background_color(text_layer, GColorWhite);
+    text_layer_set_text_color(text_layer, GColorBlack);
+    setting_minutes = false;
+    setting_seconds = false;
+  }
 }
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  start_countdown();
+  if (!setting_minutes && !setting_seconds) {
+    start_countdown();
+  } else {
+    our_interval++;
+    update_timer_text();
+  }
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  pause_countdown();
+  if (!setting_minutes && !setting_seconds) {
+    pause_countdown();
+  } else {
+    our_interval--;
+    update_timer_text();
+  }
 }
 
 static void click_config_provider(void *context) {
