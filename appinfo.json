@@ -1,13 +1,20 @@
 {
     "appKeys": {},
     "capabilities": [
-        ""
+        "configurable"
     ],
     "companyName": "brian.folts@gmail.com",
     "longName": "Interval Timer",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/interval_icon.png",
+                "menuIcon": true,
+                "name": "INTERVAL_ICON",
+                "type": "png"
+            }
+        ]
     },
     "sdkVersion": "2",
     "shortName": "Interval Timer",
